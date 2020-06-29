@@ -20,7 +20,13 @@ mongoose.Promise = global.Promise;
     });
 
 
-
+//making a post request using student model
+const Student = require('./models/student');    
+app.post('/newStudent',(req,res,error)=>{
+    Student.create(req.body).then((student)=>{
+        res.send(student);
+    }).catch(error);
+})
 
 app.listen(port,()=>{
     console.log('server is running on '+[port]);
