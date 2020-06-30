@@ -5,7 +5,7 @@ var port = process.env.PORT || "8000";
 
 
 
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 //app.use(bodyParser.json());
 
 //Making mongodb connection 
@@ -25,21 +25,27 @@ mongoose.Promise = global.Promise;
 //making a post request using student model
 const Student = require('./models/student');    
 app.post('/newStudent',(req,res,next)=>{
-    Student.create(req.body).then((student)=>{
+    Student.create({studentNo: req.body.studentNo,classes: splitModules(req.body.classes)}).then((student)=>{ 
         res.send(student);
     }).catch(next);
 })
 
 //updating student class info
 app.put('/updateStudent',(req,res,next)=>{
-    Student.findByIdAndUpdate({_id:req.body._id},req.body).then((student)=>{
+    Student.findByIdAndUpdate({_id:req.body._id},{studentNo: req.body.studentNo,
+        password: req.body.password,classes:splitModules(req.body.classes)}).then((student)=>{
         res.send(student);
     }).catch(next);
 })
 
-
+//function splitting string as saving as array
+const splitModules = function(modules_String){
+    arrayModules = modules_String.split(",");
+    return arrayModules;
+}
 
 //Delete all classes
+
 
 app.listen(port,()=>{
     console.log('server is running on '+[port]);
