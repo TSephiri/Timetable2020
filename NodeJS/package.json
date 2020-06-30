@@ -1,7 +1,6 @@
 {
   "name": "nodejs",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,5 +13,7 @@
     "mocha": "^8.0.1",
     "mongodb": "^3.5.9",
     "mongoose": "^5.9.20"
-  }
+  },
+  "devDependencies": {},
+  "description": ""
 }
