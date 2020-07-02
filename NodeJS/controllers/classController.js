@@ -4,7 +4,7 @@ var router = express.Router();
 //To get id from mongoose
 var ObjectId = require('mongoose').Types.ObjectId;
 
-var { ClassModel } = require('../models/class');
+const ClassModel  = require('../models/class');
 
 router.get('/', (req, res) => {
     ClassModel.find((err, docs) => {
@@ -16,12 +16,12 @@ router.get('/', (req, res) => {
     })
 });
 
-router.post('/', (req, res) => {
-
-
+router.post('/', (req, res,next) => {
+    console.log(req.body);
     ClassModel.create({ degree_id: req.body.degree_id, module: req.body.module, day: req.body.day, time: req.body.time, venue: req.body.venue }).then((cls) => {
+        console.log(req.params);
         res.send(cls);
-    }).catch(err);
+    }).catch(next);
 });
 
 

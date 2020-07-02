@@ -4,8 +4,8 @@ var router = express.Router();
 //To get id from mongoose
 var ObjectId = require('mongoose').Types.ObjectId;
 
-var { StudentModel } = require('../models/student');
-var { ClassModel } = require('../models/class')
+var  StudentModel  = require('../models/student');
+var  ClassModel  = require('../models/class')
 
 router.get('/', (req, res) => {
     StudentModel.find((err, docs) => {

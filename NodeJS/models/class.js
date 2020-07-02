@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 const ClassSchema = new Schema({
     degree_id: String,
     module: String,
-    day: Date,
-    time: Date,
+    day: String,
+    time: String,
     venue: String
 })
 
