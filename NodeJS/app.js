@@ -47,9 +47,10 @@ const splitModules = function(modules_String){
 }
 //get student and their classes
 app.get('/getStudent',(req,res,next)=>{
-    Student.find({studentNo:req.body.studentNo}).then((student)=>{
+    Student.find({studentNo:20102010}).then((student)=>{
         // student.classes.forEach(element => {
             console.log(req.body.studentNo);
+            console.log(student);
         //     Class.find({Module_Code: element})
         //     res.send(element);
         // });
