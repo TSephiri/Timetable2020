@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 const ClassSchema = new Schema({
     Module_Code : String,
     Lecture_time : Date,
-    Venue : String,
+    Venue : String
 })
 
-const ClassModel = mongoose.model('class',ClassSchema);
+const Class = mongoose.model('class',ClassSchema);
 
-module.exports = ClassModel;
+module.exports = Class;

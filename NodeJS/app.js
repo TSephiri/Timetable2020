@@ -5,7 +5,7 @@ var port = process.env.PORT || "8000";
 
 
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: false}));
 //app.use(bodyParser.json());
 
 //Making mongodb connection 
@@ -23,7 +23,9 @@ mongoose.Promise = global.Promise;
 
 
 //making a post request using student model
-const Student = require('./models/student');    
+const Student = require('./models/student');  
+const Class = require('./models/class');
+
 app.post('/newStudent',(req,res,next)=>{
     Student.create({studentNo: req.body.studentNo,classes: splitModules(req.body.classes)}).then((student)=>{ 
         res.send(student);
@@ -43,6 +45,19 @@ const splitModules = function(modules_String){
     arrayModules = modules_String.split(",");
     return arrayModules;
 }
+//get student and their classes
+app.get('/getStudent',(req,res,next)=>{
+    Student.find({studentNo:req.body.studentNo}).then((student)=>{
+        // student.classes.forEach(element => {
+            console.log(req.body.studentNo);
+        //     Class.find({Module_Code: element})
+        //     res.send(element);
+        // });
+        res.send(student)
+        
+    })
+})
+
 
 //Delete all classes
 
