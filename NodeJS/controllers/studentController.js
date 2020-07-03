@@ -17,16 +17,21 @@ router.get('/', (req, res) => {
     })
 });
 
-router.post('/', (req, res) => {
-    StudentModel.create({
-        StudentNo: req.body.StudentNo,
-        Password: req.body.Password,
-        Email: req.body.Email,
-        Degree_id: req.body.Degree_id,
-        classes: getDegreeInfo(req.body.Degree_id)
-    }).then((student) => {
-        res.send(student);
-    })
+router.post('/', (req, res,next) => {
+    //var classInfo = getDegreeInfo(req.body.Degree_id);
+    //
+    ClassModel.find({ degree_id: req.body.Degree_id }).then((deg) => {
+        StudentModel.create({
+            StudentNo: req.body.StudentNo,
+            Password: req.body.Password,
+            Email: req.body.Email,
+            Degree_id: req.body.Degree_id,
+            classes: deg
+        }).then((student) => {
+            res.send(student);
+    
+        })
+    }).catch(next)
 })
 
 router.put('/:id', (req, res) => {
@@ -69,10 +74,7 @@ router.delete('/:id', (req, res) => {
 });
 
 var getDegreeInfo = function(degree) {
-    ClassModel.find({ degree_id: degree }).then((deg) => {
-        console.log(deg);
-        return deg;
-    })
+    
 }
 
 module.exports = router;
