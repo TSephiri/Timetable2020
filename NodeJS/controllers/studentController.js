@@ -29,7 +29,6 @@ router.post('/', (req, res,next) => {
             classes: deg
         }).then((student) => {
             res.send(student);
-    
         })
     }).catch(next)
 })
@@ -51,7 +50,7 @@ router.put('/:id', (req, res) => {
         if (!err) {
             res.send(docs)
         } else {
-            console.log("Error at upadting student: " + JSON.stringify(err, undefined, 2))
+            console.log("Error at updating student: " + JSON.stringify(err, undefined, 2))
         }
     })
 
