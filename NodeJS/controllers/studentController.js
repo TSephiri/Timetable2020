@@ -16,6 +16,18 @@ router.get('/', (req, res) => {
         }
     })
 });
+//
+router.get('/:id', (req, res) => {
+    var id = req.params.id;
+    StudentModel.find({StudentNo: id},(err, docs) => {
+        if (!err) {
+            res.send(docs);
+            console.log("sent student info"+id);
+        } else {
+            console.log("Error at retrieving students: " + JSON.stringify(err, undefined, 2));
+        }
+    })
+});
 
 router.post('/', (req, res,next) => {
     //var classInfo = getDegreeInfo(req.body.Degree_id);
