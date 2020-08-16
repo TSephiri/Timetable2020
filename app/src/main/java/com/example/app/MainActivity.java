@@ -1,6 +1,8 @@
 package com.example.app;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
@@ -9,6 +11,8 @@ import com.example.app.Retrofit.ClassModel;
 import com.example.app.Retrofit.NodeJS;
 import com.example.app.Retrofit.RetrofitClient;
 import com.example.app.Retrofit.StudentModel;
+import com.google.android.material.tabs.TabItem;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,37 +54,50 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d(TAG,"onCreate : Started");
 
+        //***********************************************
+          TabLayout tabLayout = findViewById(R.id.tabBar);
+//        TabItem tabMon = findViewById(R.id.Mon);
+//        TabItem tabTue = findViewById(R.id.Tue);
+//        TabItem tabWed = findViewById(R.id.Wed);
+//        TabItem tabThur = findViewById(R.id.Thur);
+//        TabItem tabFri = findViewById(R.id.Fri);
+
+        final ViewPager viewPager = findViewById(R.id.viewPager);
+
+        PagerAdapter pagerAdapter = new
+                PagerAdapter(this,getSupportFragmentManager());
+
+        viewPager.setAdapter(pagerAdapter);
+
+        tabLayout.setupWithViewPager(viewPager);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+               // viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                //viewPager.setCurrentItem(tab.getPosition());
+            }
+        });
+
+        //***************************************************
 
         //Init API
         Retrofit retrofit = RetrofitClient.getInstance_get();
         myAPI = retrofit.create(NodeJS.class);
 
 
-        mListView = (ListView) findViewById(R.id.listView);
+        //mListView = (ListView) findViewById(R.id.listView);
 
-        getClasses();
-//        //********************************
-//        ListView mListView = (ListView) findViewById(R.id.listView);
-//
-//        //Create the ClassModel objects
-//        ClassModel c1 = new ClassModel("itrw322","monday","7:45","c464");
-//        ClassModel c2 = new ClassModel("itrw322","monday","7:45","c464");
-//        ClassModel c3 = new ClassModel("itrw322","monday","7:45","c464");
-//        ClassModel c4 = new ClassModel("itrw322","monday","7:45","c464");
-//        ClassModel c5 = new ClassModel("itrw322","monday","7:45","c464");
-//
-//        //Add the StudentModel objects to an ArrayList
-//        ArrayList<ClassModel> cList = new ArrayList<>();
-//        cList.add(c1);
-//        cList.add(c2);
-//        cList.add(c3);
-//        cList.add(c4);
-//        cList.add(c5);
-//
-//        ClassListAdapter adapter = new ClassListAdapter(this, R.layout.adapter_view_layout,cList);
-//        mListView.setAdapter(adapter);
-//
-//        //*************************************
+        //getClasses();
 
     }
 
