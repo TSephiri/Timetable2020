@@ -12,9 +12,9 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface NodeJS {
-    @POST("/")
+    @POST("api/students/")
     @FormUrlEncoded
-    Observable<String> addNewStudent(@Field("StudentNo")String StudentNo,
+    Call<String> addNewStudent(@Field("StudentNo")String StudentNo,
                                      @Field("Password")String Password,
                                      @Field("Email")String Email,
                                      @Field("Degree_id")String Degree_id);
