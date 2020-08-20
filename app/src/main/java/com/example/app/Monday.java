@@ -136,17 +136,57 @@ public class Monday extends Fragment {
 
     public void addTextViews(List<StudentModel> student,ArrayList<ClassModel> classList,ListView mListView)
     {
+        int index=-1;
         for(StudentModel s: student) {
             for (ClassModel model : s.getClasses()) {
+//                ClassModel temp = new ClassModel("","", model.getTime(),"");
+//                index = classList.indexOf(temp);
                 //Log.i("log stuff", model.getModule());
-
-                    classList.add(new ClassModel(model.getModule(), model.getDay(), model.getTime(), model.getVenue()));
-
+                if(model.getDay().equals("Monday"))
+                classList.set(getIndex(model.getTime()),new ClassModel(model.getModule(), model.getDay(), model.getTime(), model.getVenue()));
             }
         }
 
         updateView(classList,mListView);
 
+    }
+
+    public int getIndex(String time){
+        int index = -1;
+            switch (time)
+            {
+                case "8:00":
+                    index = 0;
+                    break;
+                case "9:00":
+                    index = 1;
+                    break;
+                case "10:00":
+                    index = 2;
+                    break;
+                case "11:00":
+                    index = 3;
+                    break;
+                case "12:00":
+                    index = 4;
+                    break;
+                case "13:00":
+                    index = 5;
+                    break;
+                case "14:00":
+                    index = 6;
+                    break;
+                case "15:00":
+                    index = 7;
+                    break;
+                case "16:00":
+                    index = 8;
+                    break;
+                case "17:00":
+                    index = 9;
+                    break;
+            }
+            return index;
     }
 
     public void updateView(ArrayList<ClassModel> classList,ListView mListView)
