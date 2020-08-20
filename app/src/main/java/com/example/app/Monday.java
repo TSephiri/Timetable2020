@@ -87,12 +87,12 @@ public class Monday extends Fragment {
         View view = inflater.inflate(R.layout.fragment_monday, container, false);
 
 
-        return initAPI(view,classList,myAPI,gListView,R.id.listView);
+        return initAPI(view,classList,myAPI,gListView,R.id.listView,"Monday");
         // return inflater.inflate(R.layout.fragment_monday, container, false);
     }
 
     //From here till the end of the class can be moved into a separate interface
-    public View initAPI(View view,ArrayList<ClassModel> classList,NodeJS myAPI,ListView gListView,int Id){
+    public View initAPI(View view,ArrayList<ClassModel> classList,NodeJS myAPI,ListView gListView,int Id,String day){
         classList = new ArrayList<>();
 
         //Init API
@@ -101,7 +101,7 @@ public class Monday extends Fragment {
 
         gListView = (ListView) view.findViewById(Id);
         initTimeTable(classList);
-        getClasses(myAPI,classList,gListView);
+        getClasses(myAPI,classList,gListView,day);
         ///////////////////////////////////////////////////////
         return view;
     }
@@ -114,8 +114,8 @@ public class Monday extends Fragment {
         }
     }
 
-    public void getClasses(NodeJS myAPI, final ArrayList<ClassModel> classList,final ListView mListView){
-        Call<List<StudentModel>> call = myAPI.getStudentClasses("20002000");
+    public void getClasses(NodeJS myAPI, final ArrayList<ClassModel> classList,final ListView mListView,final String day){
+        Call<List<StudentModel>> call = myAPI.getStudentClasses("12345678");
 
         call.enqueue(new Callback<List<StudentModel>>() {
             @Override
@@ -124,7 +124,7 @@ public class Monday extends Fragment {
 
                 List<StudentModel>student = response.body();
 
-                addTextViews(student,classList,mListView);
+                addTextViews(student,classList,mListView,day);
             }
 
             @Override
@@ -134,7 +134,7 @@ public class Monday extends Fragment {
         });
     }
 
-    public void addTextViews(List<StudentModel> student,ArrayList<ClassModel> classList,ListView mListView)
+    public void addTextViews(List<StudentModel> student,ArrayList<ClassModel> classList,ListView mListView,String day)
     {
         int index=-1;
         for(StudentModel s: student) {
@@ -142,7 +142,7 @@ public class Monday extends Fragment {
 //                ClassModel temp = new ClassModel("","", model.getTime(),"");
 //                index = classList.indexOf(temp);
                 //Log.i("log stuff", model.getModule());
-                if(model.getDay().equals("Monday"))
+                if(model.getDay().equals(day))
                 classList.set(getIndex(model.getTime()),new ClassModel(model.getModule(), model.getDay(), model.getTime(), model.getVenue()));
             }
         }

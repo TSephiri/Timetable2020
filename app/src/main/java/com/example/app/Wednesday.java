@@ -38,7 +38,7 @@ public class Wednesday extends Fragment {
     List<StudentModel> student;
     ArrayList<ClassModel> classList;
 
-    ListView mListView;
+    ListView gListView;
 //////////////////////////////////////
 
     // TODO: Rename parameter arguments, choose names that match
@@ -84,22 +84,31 @@ public class Wednesday extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //////////////////////
-        classList = new ArrayList<>();
+        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_monday, container, false);
+
+
+        return initAPI(view,classList,myAPI,gListView,R.id.listView,"Wednesday");
+        // return inflater.inflate(R.layout.fragment_monday, container, false);
+    }
+
+    //From here till the end of the class can be moved into a separate interface
+    public View initAPI(View view, ArrayList<ClassModel> classList, NodeJS myAPI, ListView gListView, int Id, String day){
+        classList = new ArrayList<>();
 
         //Init API
         Retrofit retrofit = RetrofitClient.getInstance_get();
         myAPI = retrofit.create(NodeJS.class);
 
-        mListView = (ListView) view.findViewById(R.id.listView);
-        initTimeTable();
-        getClasses();
+        gListView = (ListView) view.findViewById(Id);
+        initTimeTable(classList);
+        getClasses(myAPI,classList,gListView,day);
         ///////////////////////////////////////////////////////
         return view;
     }
 
-    public void initTimeTable(){
+    public void initTimeTable(ArrayList<ClassModel> classList){
 
         //classList
         for(int i = 8;i<18;i++ ){
@@ -107,17 +116,17 @@ public class Wednesday extends Fragment {
         }
     }
 
-    public void getClasses(){
-        Call<List<StudentModel>> call = myAPI.getStudentClasses("20002000");
+    public void getClasses(NodeJS myAPI, final ArrayList<ClassModel> classList,final ListView mListView,final String day){
+        Call<List<StudentModel>> call = myAPI.getStudentClasses("12345678");
 
         call.enqueue(new Callback<List<StudentModel>>() {
             @Override
             public void onResponse(Call<List<StudentModel>> call, Response<List<StudentModel>> response) {
                 ///////////////////////////////////
 
-                student = response.body();
+                List<StudentModel>student = response.body();
 
-                addTextViews();
+                addTextViews(student,classList,mListView,day);
             }
 
             @Override
@@ -127,24 +136,63 @@ public class Wednesday extends Fragment {
         });
     }
 
-    public void addTextViews()
+    public void addTextViews(List<StudentModel> student,ArrayList<ClassModel> classList,ListView mListView,String day)
     {
-//        for(StudentModel s: student) {
-//            for (ClassModel model : s.getClasses()) {
-//                //Log.i("log stuff", model.getModule());
-//                //if(model.getDay()=="Mon") {
-//                    classList.add(new ClassModel(model.getModule(), model.getDay(), model.getTime(), model.getVenue()));
-//                    switch(model.getTime()){
-//
-//                    }
-//                }
-//            }
-//        }
+        int index=-1;
+        for(StudentModel s: student) {
+            for (ClassModel model : s.getClasses()) {
+//                ClassModel temp = new ClassModel("","", model.getTime(),"");
+//                index = classList.indexOf(temp);
+                //Log.i("log stuff", model.getModule());
+                if(model.getDay().equals(day))
+                    classList.set(getIndex(model.getTime()),new ClassModel(model.getModule(), model.getDay(), model.getTime(), model.getVenue()));
+            }
+        }
 
-//        while(classList.size()!=10){
-//            classList.add(new ClassModel( "TBD"," MONDAY"," "," E8 101"));
-//        }
+        updateView(classList,mListView);
 
+    }
+
+    public int getIndex(String time){
+        int index = -1;
+        switch (time)
+        {
+            case "8:00":
+                index = 0;
+                break;
+            case "9:00":
+                index = 1;
+                break;
+            case "10:00":
+                index = 2;
+                break;
+            case "11:00":
+                index = 3;
+                break;
+            case "12:00":
+                index = 4;
+                break;
+            case "13:00":
+                index = 5;
+                break;
+            case "14:00":
+                index = 6;
+                break;
+            case "15:00":
+                index = 7;
+                break;
+            case "16:00":
+                index = 8;
+                break;
+            case "17:00":
+                index = 9;
+                break;
+        }
+        return index;
+    }
+
+    public void updateView(ArrayList<ClassModel> classList,ListView mListView)
+    {
         ClassListAdapter classAdapter = new ClassListAdapter(getActivity(), classList);
         mListView.setAdapter(classAdapter);
     }
