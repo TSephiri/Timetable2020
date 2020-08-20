@@ -1,5 +1,6 @@
 package com.example.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.app.Retrofit.ClassModel;
@@ -98,6 +100,18 @@ public class Friday extends Fragment {
         myAPI = retrofit.create(NodeJS.class);
 
         gListView = (ListView) view.findViewById(Id);
+        //method for when you click on each item to alter the info
+        gListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent addInfo =  new Intent(getActivity(),UpdateInfo.class);
+                addInfo.putExtra("Day","Friday");
+                addInfo.putExtra("TimeSlot",position);
+
+                startActivity(addInfo);
+            }
+        });
+
         initTimeTable(classList);
         getClasses(myAPI,classList,gListView,day);
         ///////////////////////////////////////////////////////
