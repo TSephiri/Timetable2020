@@ -92,19 +92,28 @@ public class Monday extends Fragment {
         myAPI = retrofit.create(NodeJS.class);
 
         mListView = (ListView) view.findViewById(R.id.listView);
-
+        initTimeTable();
         getClasses();
-
+        ///////////////////////////////////////////////////////
         return view;
         // return inflater.inflate(R.layout.fragment_monday, container, false);
     }
 
+    public void initTimeTable(){
+
+        //classList
+        for(int i = 8;i<18;i++ ){
+            classList.add((new ClassModel("","",i+":00","")));
+        }
+    }
+
     public void getClasses(){
-        Call<List<StudentModel>> call = myAPI.getStudentClasses("20202020");
+        Call<List<StudentModel>> call = myAPI.getStudentClasses("20002000");
 
         call.enqueue(new Callback<List<StudentModel>>() {
             @Override
             public void onResponse(Call<List<StudentModel>> call, Response<List<StudentModel>> response) {
+                ///////////////////////////////////
 
                 student = response.body();
 
@@ -120,13 +129,22 @@ public class Monday extends Fragment {
 
     public void addTextViews()
     {
-        for(StudentModel s: student) {
-            for (ClassModel model : s.getClasses()) {
-                //Log.i("log stuff", model.getModule());
-                classList.add(new ClassModel(model.getModule(), model.getDay(), model.getTime(), model.getVenue()));
-            }
+//        for(StudentModel s: student) {
+//            for (ClassModel model : s.getClasses()) {
+//                //Log.i("log stuff", model.getModule());
+//                //if(model.getDay()=="Mon") {
+//                    classList.add(new ClassModel(model.getModule(), model.getDay(), model.getTime(), model.getVenue()));
+//                    switch(model.getTime()){
+//
+//                    }
+//                }
+//            }
+//        }
 
-        }
+//        while(classList.size()!=10){
+//            classList.add(new ClassModel( "TBD"," MONDAY"," "," E8 101"));
+//        }
+
         ClassListAdapter classAdapter = new ClassListAdapter(getActivity(), classList);
         mListView.setAdapter(classAdapter);
     }
