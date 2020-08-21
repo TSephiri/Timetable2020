@@ -2,11 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ClassSchema = new Schema({
-    Module_Code : String,
-    Lecture_time : Date,
-    Venue : String
+    degree_id: String,
+    module: String,
+    day: String,
+    time: String,
+    venue: String
 })
 
-const Class = mongoose.model('class',ClassSchema);
+const ClassModel = mongoose.model('class', ClassSchema);
 
-module.exports = Class;
+module.exports = ClassModel;
