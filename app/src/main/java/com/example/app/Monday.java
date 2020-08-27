@@ -108,7 +108,7 @@ public class Monday extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent addInfo =  new Intent(getActivity(),UpdateInfo.class);
                 addInfo.putExtra("Day","Monday");
-                addInfo.putExtra("TimeSlot",position);
+                addInfo.putExtra("TimeSlot",position+"");
 
                 startActivity(addInfo);
             }

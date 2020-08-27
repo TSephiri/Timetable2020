@@ -7,15 +7,15 @@ var ObjectId = require('mongoose').Types.ObjectId;
 var  StudentModel  = require('../models/student');
 var  ClassModel  = require('../models/class')
 
-router.get('/:id', (req, res) => {
-    StudentModel.findOne({StudentNo:req.params.id},(err, docs) => {
-        if (!err) {
-            res.send(docs);
-        } else {
-            console.log("Error at retrieving student: " + JSON.stringify(err, undefined, 2));
-        }
-    })
-});
+// router.get('/:id', (req, res) => {
+//     StudentModel.findOne({StudentNo:req.params.id},(err, docs) => {
+//         if (!err) {
+//             res.send(docs);
+//         } else {
+//             console.log("Error at retrieving student: " + JSON.stringify(err, undefined, 2));
+//         }
+//     })
+// });
 //
 router.get('/:id', (req, res) => {
     var id = req.params.id;
