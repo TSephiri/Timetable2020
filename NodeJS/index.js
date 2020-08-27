@@ -9,6 +9,7 @@ var app = express();
 app.use(bodyParser.urlencoded({extended:true}));
 
 var studentsController = require('./controllers/studentController');
+var studentsControllerUpdate = require('./controllers/studentControllerUpdate');
 var classController = require('./controllers/classController')
 
 
@@ -18,6 +19,8 @@ var classController = require('./controllers/classController')
 const db = require('./config/keys').MongoURI;
 
 //Connect Mongo
+mongoose.set('useFindAndModify', false);
+mongoose.set('useUnifiedTopology', true );
 mongoose.connect(db,{useNewUrlParser: true}).then(() => console.log('MongoDb connected'))
 .catch(err => console.log(err));
 
@@ -25,6 +28,7 @@ mongoose.connect(db,{useNewUrlParser: true}).then(() => console.log('MongoDb con
 
 app.use('/api/students',studentsController);
 app.use('/api/class',classController);
+app.use('/api/update',studentsControllerUpdate);
 
 
 
