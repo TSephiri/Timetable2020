@@ -9,6 +9,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface NodeJS {
@@ -21,5 +22,12 @@ public interface NodeJS {
 
     @GET("api/students/{studentNo}")
     Call<List<StudentModel>> getStudentClasses(@Path("studentNo")String studentNo);
+    @PUT("api/update/{studentNo}")
+    @FormUrlEncoded
+    Call<String> updateClasses(@Path("studentNo")String studentNo,
+                               @Field("module")String module,
+                               @Field("time")String time,
+                               @Field("venue")String venue,
+                               @Field("day")String day);
 
 }
