@@ -24,6 +24,18 @@ router.post('/', (req, res,next) => {
     }).catch(next);
 });
 
+// //get using student id
+// router.get('/:id', (req, res) => {
+
+//     var id = req.params.id;
+//     ClassModel.find({id},(err, docs) => {
+//         if (!err) {
+//             res.send(docs);
+//         } else {
+//             console.log("Error at retrieving students: " + JSON.stringify(err, undefined, 2))
+//         }
+//     })
+// });
 
 //Update
 router.put('/:id', (req, res) => {
